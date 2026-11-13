@@ -15,6 +15,10 @@ target_sources(planova_ui PRIVATE
     slicer/WeightRebalance.cpp
     slicer/WeightSlidersPanel.cpp
 )
+
+add_executable(slicer_demo ../tools/slicer_demo/main.cpp)
+target_include_directories(slicer_demo PRIVATE ${CMAKE_SOURCE_DIR})
+target_link_libraries(slicer_demo PRIVATE planova_ui)
 # --- end S4 ---
 
 add_executable(planova app/main.cpp)
