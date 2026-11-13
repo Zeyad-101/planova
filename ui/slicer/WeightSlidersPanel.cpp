@@ -1,27 +1,61 @@
 #include "slicer/WeightSlidersPanel.h"
 #include "slicer/WeightRebalance.h"
-#include <QGridLayout>
+#include <QHBoxLayout>
 #include <QLabel>
 #include <QSlider>
+#include <QVBoxLayout>
 
 namespace planova::slicer {
 
 WeightSlidersPanel::WeightSlidersPanel(QWidget* parent) : QWidget(parent) {
-    setObjectName("WeightSlidersPanel");
-    auto* grid = new QGridLayout(this);
-    const char* names[3] = {"Skill Match", "Workload Balance", "Priority / Velocity"};
+    setObjectName("card");
+
+    auto* mainLayout = new QVBoxLayout(this);
+    mainLayout->setContentsMargins(20, 16, 20, 16);
+    mainLayout->setSpacing(14);
+
+    // Header row: Card Title on left, Sum label on right
+    auto* headerLayout = new QHBoxLayout();
+    auto* cardTitle = new QLabel("Assignment Strategy Weights", this);
+    cardTitle->setObjectName("cardTitle");
+    headerLayout->addWidget(cardTitle);
+    headerLayout->addStretch();
+
+    sumLabel_ = new QLabel("Sum: 100%", this);
+    sumLabel_->setObjectName("sumLabel");
+    headerLayout->addWidget(sumLabel_);
+    mainLayout->addLayout(headerLayout);
+
+    // Horizontal sliders row across the card
+    auto* slidersRow = new QHBoxLayout();
+    slidersRow->setSpacing(24);
+
+    const char* names[3] = {"Skill Match (α)", "Workload Leveling (β)", "Priority Weight (γ)"};
     for (int i = 0; i < 3; ++i) {
+        auto* itemLayout = new QHBoxLayout();
+        itemLayout->setSpacing(10);
+
+        auto* nameLabel = new QLabel(names[i], this);
+        nameLabel->setObjectName("sliderNameLabel");
+        itemLayout->addWidget(nameLabel);
+
         sliders_[i] = new QSlider(Qt::Horizontal, this);
         sliders_[i]->setRange(0, 100);
+        sliders_[i]->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
+        itemLayout->addWidget(sliders_[i], 1);
+
         valueLabels_[i] = new QLabel(this);
-        grid->addWidget(new QLabel(names[i], this), i, 0);
-        grid->addWidget(sliders_[i], i, 1);
-        grid->addWidget(valueLabels_[i], i, 2);
-        connect(sliders_[i], &QSlider::valueChanged, this, [this, i](int v) { onSliderMoved(i, v); });
+        valueLabels_[i]->setObjectName("sliderValueLabel");
+        itemLayout->addWidget(valueLabels_[i]);
+
+        connect(sliders_[i], &QSlider::valueChanged, this, [this, i](int v) {
+            onSliderMoved(i, v);
+        });
+
+        slidersRow->addLayout(itemLayout, 1);
     }
-    sumLabel_ = new QLabel(this);
-    sumLabel_->setObjectName("sumLabel");
-    grid->addWidget(sumLabel_, 3, 0, 1, 3);
+
+    mainLayout->addLayout(slidersRow);
     syncWidgets();
 }
 

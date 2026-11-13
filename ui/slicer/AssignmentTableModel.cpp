@@ -5,6 +5,17 @@
 
 namespace planova::slicer {
 
+namespace {
+QString extractInitials(const std::string& name) {
+    QString qname = QString::fromStdString(name).trimmed();
+    if (qname.isEmpty()) return {};
+    auto parts = qname.split(' ', Qt::SkipEmptyParts);
+    if (parts.isEmpty()) return {};
+    if (parts.size() == 1) return parts[0].left(1).toUpper();
+    return (parts.first().left(1) + parts.last().left(1)).toUpper();
+}
+}
+
 AssignmentTableModel::AssignmentTableModel(QObject* parent)
     : QAbstractTableModel(parent) {}
 
@@ -50,6 +61,17 @@ QVariant AssignmentTableModel::data(const QModelIndex& index, int role) const {
     const auto& a = assignments_[index.row()];
     const auto* t = findTask(a.taskId);
     const auto* m = findMember(a.memberId);
+
+    // Custom structured roles for rich rendering delegates
+    if (role == TaskTitleRole && t) return QString::fromStdString(t->title);
+    if (role == TaskComplexityRole && t) return t->complexity;
+    if (role == RequiredSkillRole && t) return QString::fromStdString(skillToString(t->skill)).toUpper();
+    if (role == PriorityRole && t) return QString::fromStdString(priorityToString(t->priority)).toUpper();
+    if (role == AssigneeNameRole) return m ? QString::fromStdString(m->name) : QString::fromStdString(a.memberId);
+    if (role == AssigneeInitialsRole) return extractInitials(m ? m->name : a.memberId);
+    if (role == MatchPctRole) return a.matchPct;
+    if (role == WaitingOnDepRole) return a.waitingOnDep;
+    if (role == RationaleRole) return QString::fromStdString(a.rationale);
 
     switch (index.column()) {
         case Column::TaskComplexity:

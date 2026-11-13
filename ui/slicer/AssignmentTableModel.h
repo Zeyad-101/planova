@@ -11,6 +11,18 @@ class AssignmentTableModel : public QAbstractTableModel {
 public:
     enum Column : int { TaskComplexity = 0, Skill, Priority, Assignee, Rationale, Status, ActionOverride, ColCount };
 
+    enum CustomRoles : int {
+        TaskTitleRole = Qt::UserRole + 1,
+        TaskComplexityRole,
+        RequiredSkillRole,
+        PriorityRole,
+        AssigneeNameRole,
+        AssigneeInitialsRole,
+        MatchPctRole,
+        WaitingOnDepRole,
+        RationaleRole
+    };
+
     explicit AssignmentTableModel(QObject* parent = nullptr);
     void setAssignments(const std::vector<Assignment>& assignments, const std::vector<TaskDto>& tasks,
                         const std::vector<MemberDto>& members);

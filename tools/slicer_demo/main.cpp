@@ -11,7 +11,11 @@
 #include "tests/fakes/FakeTaskQuery.h"
 #include <QApplication>
 #include <QMainWindow>
+#include <QPixmap>
+#include <QScrollArea>
+#include <QScrollBar>
 #include <QStyleFactory>
+#include <QTimer>
 
 class AssignProjection : public IProjection {
 public:
@@ -28,9 +32,28 @@ private:
 };
 
 int main(int argc, char* argv[]) {
+    Q_INIT_RESOURCE(planova);
     QApplication app(argc, argv);
     app.setStyle(QStyleFactory::create("Fusion"));
-    ThemeManager::instance().apply(ThemeMode::Light);
+
+    auto& tm = ThemeManager::instance();
+    tm.apply(ThemeMode::Light);
+
+    QPalette lightPalette;
+    lightPalette.setColor(QPalette::Window, tm.color(Token::Background));
+    lightPalette.setColor(QPalette::WindowText, tm.color(Token::TextPrimary));
+    lightPalette.setColor(QPalette::Base, tm.color(Token::Surface));
+    lightPalette.setColor(QPalette::AlternateBase, tm.color(Token::SurfaceAlt));
+    lightPalette.setColor(QPalette::ToolTipBase, tm.color(Token::Surface));
+    lightPalette.setColor(QPalette::ToolTipText, tm.color(Token::TextPrimary));
+    lightPalette.setColor(QPalette::Text, tm.color(Token::TextPrimary));
+    lightPalette.setColor(QPalette::Button, tm.color(Token::Surface));
+    lightPalette.setColor(QPalette::ButtonText, tm.color(Token::TextPrimary));
+    lightPalette.setColor(QPalette::BrightText, tm.color(Token::AccentText));
+    lightPalette.setColor(QPalette::Link, tm.color(Token::Accent));
+    lightPalette.setColor(QPalette::Highlight, tm.color(Token::Accent));
+    lightPalette.setColor(QPalette::HighlightedText, tm.color(Token::AccentText));
+    app.setPalette(lightPalette);
 
     FakeTaskQuery tq;
     FakeMemberQuery mq;
@@ -76,9 +99,19 @@ int main(int argc, char* argv[]) {
     planova::slicer::WeightedScoringStrategy strategy;
     planova::slicer::SlicerService slicer(tq, mq, strategy, log, clock);
 
+    QString screenshotPath;
+    QString screenshotTablePath;
+    for (int i = 1; i < argc; ++i) {
+        if (QString(argv[i]) == "--screenshot" && i + 1 < argc) {
+            screenshotPath = argv[++i];
+        } else if (QString(argv[i]) == "--screenshot-table" && i + 1 < argc) {
+            screenshotTablePath = argv[++i];
+        }
+    }
+
     QMainWindow window;
     window.setWindowTitle("Planova Chaos Slicer (dev harness)");
-    window.resize(1200, 800);
+    window.resize(1280, 800);
 
     auto* page = new planova::slicer::ChaosSlicerPage(slicer, tq, mq, &window);
     log.bus().subscribe([page](const std::string&) {
@@ -87,5 +120,26 @@ int main(int argc, char* argv[]) {
 
     window.setCentralWidget(page);
     window.show();
+
+    if (!screenshotPath.isEmpty()) {
+        QTimer::singleShot(300, [&window, screenshotPath]() {
+            QPixmap pix = window.grab();
+            pix.save(screenshotPath);
+            QApplication::exit(0);
+        });
+    } else if (!screenshotTablePath.isEmpty()) {
+        QTimer::singleShot(300, [&window, page, screenshotTablePath]() {
+            auto* scroll = page->findChild<QScrollArea*>("slicerScrollArea");
+            if (scroll && scroll->verticalScrollBar()) {
+                scroll->verticalScrollBar()->setValue(scroll->verticalScrollBar()->maximum());
+            }
+            QTimer::singleShot(150, [&window, screenshotTablePath]() {
+                QPixmap pix = window.grab();
+                pix.save(screenshotTablePath);
+                QApplication::exit(0);
+            });
+        });
+    }
+
     return app.exec();
 }
