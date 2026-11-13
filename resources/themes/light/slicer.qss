@@ -1,1 +1,6 @@
-/* S4 styles are added in Task 8 */
+QWidget#ChaosSlicerPage { background: #FAF8F5; }
+QWidget#WeightSlidersPanel, QFrame#card { background: #FFFFFF; border: 1px solid #E7E2D6; border-radius: 12px; }
+QPushButton#primaryButton { background: #5438DC; color: #FFFFFF; border-radius: 8px; padding: 8px 16px; }
+QPushButton#secondaryButton { background: #F5F2EA; color: #1A1A1F; border-radius: 8px; padding: 8px 16px; }
+QHeaderView::section { background: #F5F2EA; color: #6B6B73; border: none; padding: 6px; }
+QLabel#sumLabel { color: #6B6B73; }
