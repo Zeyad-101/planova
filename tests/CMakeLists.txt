@@ -12,6 +12,8 @@ function(planova_add_ui_test name)
     target_link_libraries(${name} PRIVATE Qt6::Test planova_ui)
     add_test(NAME ${name} COMMAND ${name})
 endfunction()
+
+planova_add_test(tst_ScoringWeights)
 # --- end S4 ---
 
 planova_add_test(tst_Skeleton)
