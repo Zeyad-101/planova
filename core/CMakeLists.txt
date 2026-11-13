@@ -13,5 +13,6 @@ target_link_libraries(planova_core PUBLIC Qt6::Core)
 # --- S4 ---
 target_sources(planova_core PRIVATE
     src/slicer/WeightedScoringStrategy.cpp
+    src/slicer/PizzaPortionCalculator.cpp
 )
 # --- end S4 ---
