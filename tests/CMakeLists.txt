@@ -18,6 +18,7 @@ planova_add_test(tst_WeightedStrategy)
 planova_add_test(tst_PizzaPortions)
 planova_add_test(tst_SlicerService)
 planova_add_ui_test(tst_WeightRebalance)
+planova_add_ui_test(tst_AssignmentTableModel)
 # --- end S4 ---
 
 planova_add_test(tst_Skeleton)

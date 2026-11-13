@@ -14,6 +14,8 @@ target_link_libraries(planova_ui PUBLIC Qt6::Widgets planova_core)
 target_sources(planova_ui PRIVATE
     slicer/WeightRebalance.cpp
     slicer/WeightSlidersPanel.cpp
+    slicer/AssignmentTableModel.cpp
+    slicer/AssigneeDelegate.cpp
 )
 
 add_executable(slicer_demo ../tools/slicer_demo/main.cpp)
