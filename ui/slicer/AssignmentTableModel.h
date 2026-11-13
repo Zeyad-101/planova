@@ -9,7 +9,7 @@ namespace planova::slicer {
 class AssignmentTableModel : public QAbstractTableModel {
     Q_OBJECT
 public:
-    enum Column { TaskComplexity = 0, Skill, Priority, Assignee, Rationale, Status, ActionOverride, ColCount };
+    enum Column : int { TaskComplexity = 0, Skill, Priority, Assignee, Rationale, Status, ActionOverride, ColCount };
 
     explicit AssignmentTableModel(QObject* parent = nullptr);
     void setAssignments(const std::vector<Assignment>& assignments, const std::vector<TaskDto>& tasks,

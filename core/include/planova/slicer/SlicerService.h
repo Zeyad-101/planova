@@ -31,7 +31,7 @@ private:
     IAssignmentStrategy& strategy_;
     EventLog& log_;
     IClock& clock_;
-    std::optional<ScoringWeights> lastWeights_;
+    std::optional<ScoringWeights> lastWeights_ = std::nullopt;
 };
 
 } // namespace planova::slicer

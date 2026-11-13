@@ -57,8 +57,8 @@ std::vector<Assignment> WeightedScoringStrategy::assign(const std::vector<TaskDt
                                     [&](const MemberDto& m) { return ratingOf(m, task.skill) > 0; });
 
         int maxHours = 0;
-        for (const auto& kv : hours) maxHours = std::max(maxHours, kv.second);
-        const double divisor = std::max(1, maxHours);
+        for (const auto& kv : hours) maxHours = (std::max)(maxHours, kv.second);
+        const double divisor = (std::max)(1, maxHours);
 
         const MemberDto* winner = nullptr;
         double best = 0.0;
@@ -69,7 +69,7 @@ std::vector<Assignment> WeightedScoringStrategy::assign(const std::vector<TaskDt
             double s = rating / 5.0;
             double l = 1.0 - hours[m.id] / divisor;
             bool urgent = task.priority == Priority::High || task.priority == Priority::Critical;
-            double pn = urgent ? std::min(m.velocity, 5.0) / 5.0 : 1.0;
+            double pn = urgent ? (std::min)(m.velocity, 5.0) / 5.0 : 1.0;
             double score = ws * s + wl * l + wp * pn;
 
             if (winner == nullptr || score > best + kEpsilon) {
