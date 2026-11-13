@@ -14,6 +14,7 @@ function(planova_add_ui_test name)
 endfunction()
 
 planova_add_test(tst_ScoringWeights)
+planova_add_test(tst_WeightedStrategy)
 # --- end S4 ---
 
 planova_add_test(tst_Skeleton)
