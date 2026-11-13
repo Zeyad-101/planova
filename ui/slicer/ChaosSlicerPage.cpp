@@ -1,6 +1,7 @@
 #include "slicer/ChaosSlicerPage.h"
 #include "slicer/AssigneeDelegate.h"
 #include "slicer/AssignmentTableModel.h"
+#include "slicer/PizzaWidget.h"
 #include "slicer/WeightSlidersPanel.h"
 #include <QFile>
 #include <QFrame>
@@ -64,9 +65,9 @@ ChaosSlicerPage::ChaosSlicerPage(planova::slicer::SlicerService& slicer,
     auto* pizzaCard = new QFrame(this);
     pizzaCard->setObjectName("card");
     auto* cardLayout = new QVBoxLayout(pizzaCard);
-    pizzaPlaceholder_ = new QLabel("Workload Distribution (Pizza)", pizzaCard);
-    pizzaPlaceholder_->setAlignment(Qt::AlignCenter);
-    cardLayout->addWidget(pizzaPlaceholder_);
+    cardLayout->setContentsMargins(12, 12, 12, 12);
+    pizza_ = new PizzaWidget(pizzaCard);
+    cardLayout->addWidget(pizza_);
     upperLayout->addWidget(pizzaCard, 1);
 
     mainLayout->addLayout(upperLayout);
@@ -97,6 +98,10 @@ void ChaosSlicerPage::onRecalculate() {
         return;
     }
     model_->setAssignments(preview_, tasks_.all(), members_.all());
+    if (pizza_) {
+        pizza_->setPortions(slicer_.portions(preview_));
+        pizza_->sliceAnimated();
+    }
 }
 
 void ChaosSlicerPage::onApply() {
@@ -110,7 +115,7 @@ void ChaosSlicerPage::onApply() {
 
 void ChaosSlicerPage::refreshFromBoard() {
     if (pizza_) {
-        // pizza_->setPortions(slicer_.portions());
+        pizza_->setPortions(slicer_.portions());
     }
 }
 

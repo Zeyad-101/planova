@@ -35,7 +35,6 @@ private:
     IMemberQuery& members_;
 
     WeightSlidersPanel* sliders_ = nullptr;
-    QLabel* pizzaPlaceholder_ = nullptr;
     PizzaWidget* pizza_ = nullptr;
     QTableView* table_ = nullptr;
     AssignmentTableModel* model_ = nullptr;
