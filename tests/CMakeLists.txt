@@ -16,6 +16,7 @@ endfunction()
 planova_add_test(tst_ScoringWeights)
 planova_add_test(tst_WeightedStrategy)
 planova_add_test(tst_PizzaPortions)
+planova_add_test(tst_SlicerService)
 # --- end S4 ---
 
 planova_add_test(tst_Skeleton)
