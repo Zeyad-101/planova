@@ -2,6 +2,7 @@
 
 #include <QApplication>
 #include <QFile>
+#include <QDebug>
 
 ThemeManager& ThemeManager::instance()
 {
@@ -13,8 +14,11 @@ void ThemeManager::apply(ThemeMode)
 {
     qApp->setStyle("Fusion");
     QFile file(":/themes/light/base.qss");
-    if (file.open(QIODevice::ReadOnly | QIODevice::Text))
-        qApp->setStyleSheet(QString::fromUtf8(file.readAll()));
+    if (!file.open(QIODevice::ReadOnly | QIODevice::Text)) {
+        qWarning() << "Could not load base.qss from resources";
+        return;
+    }
+    qApp->setStyleSheet(QString::fromUtf8(file.readAll()));
 }
 
 QColor ThemeManager::color(Token token) const

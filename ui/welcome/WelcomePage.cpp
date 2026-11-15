@@ -1,6 +1,6 @@
 #include "WelcomePage.h"
 
-#include <QFont>
+#include <QFrame>
 #include <QGraphicsOpacityEffect>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -11,13 +11,15 @@
 WelcomePage::WelcomePage(QWidget* parent)
     : QWidget(parent)
 {
-    auto* title = new QLabel("Welcome!", this);
-    title->setAlignment(Qt::AlignCenter);
-    QFont titleFont = title->font();
-    titleFont.setPointSize(40);
-    titleFont.setBold(true);
-    title->setFont(titleFont);
+    auto* card = new QFrame(this);
+    card->setObjectName("welcomeCard");
+    card->setMinimumSize(520, 260);
 
+    auto* title = new QLabel("Welcome!", card);
+    title->setObjectName("welcomeTitle");
+    title->setAlignment(Qt::AlignCenter);
+
+    // Fade-in animation on the title
     auto* effect = new QGraphicsOpacityEffect(title);
     title->setGraphicsEffect(effect);
     auto* fade = new QPropertyAnimation(effect, "opacity", this);
@@ -26,11 +28,14 @@ WelcomePage::WelcomePage(QWidget* parent)
     fade->setEndValue(1.0);
     fade->start();
 
-    auto* subtitle = new QLabel("Plan the work · Match the team · Measure actual progress", this);
+    auto* subtitle = new QLabel("Plan the work · Match the team · Measure actual progress", card);
+    subtitle->setObjectName("welcomeSubtitle");
     subtitle->setAlignment(Qt::AlignCenter);
 
-    auto* startButton = new QPushButton("+ Start New Project", this);
-    auto* continueButton = new QPushButton("Continue Your Projects →", this);
+    auto* startButton = new QPushButton("+ Start New Project", card);
+    startButton->setObjectName("primaryButton");
+    auto* continueButton = new QPushButton("Continue Your Projects  →", card);
+    continueButton->setObjectName("secondaryButton");
     connect(startButton, &QPushButton::clicked, this, &WelcomePage::startNewProject);
     connect(continueButton, &QPushButton::clicked, this, &WelcomePage::continueProjects);
 
@@ -40,11 +45,20 @@ WelcomePage::WelcomePage(QWidget* parent)
     buttons->addWidget(continueButton);
     buttons->addStretch();
 
+    auto* cardLayout = new QVBoxLayout(card);
+    cardLayout->setContentsMargins(40, 40, 40, 40);
+    cardLayout->addWidget(title);
+    cardLayout->addWidget(subtitle);
+    cardLayout->addSpacing(24);
+    cardLayout->addLayout(buttons);
+
+    auto* row = new QHBoxLayout();
+    row->addStretch();
+    row->addWidget(card);
+    row->addStretch();
+
     auto* layout = new QVBoxLayout(this);
     layout->addStretch();
-    layout->addWidget(title);
-    layout->addWidget(subtitle);
-    layout->addSpacing(24);
-    layout->addLayout(buttons);
+    layout->addLayout(row);
     layout->addStretch();
 }

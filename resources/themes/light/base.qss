@@ -1,12 +1,51 @@
-QWidget {
-    background-color: #FAF8F5;
-    color: #1A1A1F;
-    font-family: "Segoe UI";
+QLabel { background-color: transparent; }
+
+QStackedWidget > QWidget { background-color: transparent; }
+
+QFrame#wizardCard {
+    background-color: #FFFFFF;
+    border: 1px solid #E7E2D6;
+    border-radius: 16px;
 }
 
-QPushButton {
-    background-color: #5438DC;
-    color: #FFFFFF;
+QLabel#pageTitle { font-size: 16pt; font-weight: bold; }
+QLabel#pageSubtitle { color: #6B6B73; }
+QLabel#cardTitle { font-size: 13pt; font-weight: bold; }
+
+QLabel#stepBadge {
+    background-color: #F3F0FF;
+    color: #5438DC;
+    border: 1px solid #5438DC;
     border-radius: 8px;
-    padding: 8px 16px;
+    padding: 4px 10px;
+}
+
+QLabel#stepCircle {
+    background-color: #EDE9E1;
+    color: #6B6B73;
+    border-radius: 16px;
+    min-width: 32px;
+    max-width: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    font-weight: bold;
+}
+QLabel#stepCircle[state="active"] { background-color: #5438DC; color: #FFFFFF; }
+QLabel#stepCircle[state="done"] { background-color: #D4F981; color: #1A1A1F; }
+
+QLabel#stepName { color: #6B6B73; font-size: 8pt; }
+QLabel#stepName[state="active"] { color: #5438DC; font-weight: bold; }
+QLabel#stepName[state="done"] { color: #1A1A1F; }
+
+QPushButton#modelCard {
+    background-color: #FFFFFF;
+    color: #1A1A1F;
+    border: 1px solid #E7E2D6;
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: left;
+}
+QPushButton#modelCard:checked {
+    background-color: #F3F0FF;
+    border: 2px solid #5438DC;
 }

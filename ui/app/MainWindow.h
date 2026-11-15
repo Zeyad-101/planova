@@ -4,6 +4,8 @@
 #include <QStackedWidget>
 #include <QWidget>
 
+class SetupWizard;
+
 class MainWindow : public QMainWindow {
     Q_OBJECT
 public:
@@ -16,4 +18,5 @@ private:
     PlanovaCore& core_;
     CoreBridge& bridge_;
     QStackedWidget* pages_;
+    SetupWizard* wizard_ = nullptr;
 };

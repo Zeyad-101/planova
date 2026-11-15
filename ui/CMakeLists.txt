@@ -4,8 +4,8 @@ add_library(planova_ui STATIC
     app/MainWindow.cpp
     welcome/WelcomePage.cpp
     welcome/ProjectsHubPage.cpp
-    ../resources/planova.qrc
     welcome/SetupWizard.cpp
+    ../resources/planova.qrc
 )
 target_include_directories(planova_ui PUBLIC .)
 target_link_libraries(planova_ui PUBLIC Qt6::Widgets planova_core)
