@@ -1,0 +1,179 @@
+/* Chaos Slicer (Pizza) Light Theme - Figma Match */
+
+QWidget#ChaosSlicerPage {
+    background-color: #FAF8F5;
+    color: #1A1A1F;
+    font-family: "Segoe UI", sans-serif;
+}
+
+QScrollArea#slicerScrollArea {
+    background: transparent;
+    border: none;
+}
+
+QWidget#slicerScrollContent {
+    background: transparent;
+}
+
+/* Card Containers */
+QFrame#card {
+    background-color: #FFFFFF;
+    border: 1px solid #E7E2D6;
+    border-radius: 12px;
+}
+
+QFrame#card QLabel {
+    background: transparent;
+}
+
+QLabel#cardTitle {
+    color: #1A1A1F;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+QLabel#cardSubtitle {
+    color: #6B6B73;
+    font-size: 12px;
+}
+
+/* Buttons */
+QPushButton#primaryButton {
+    background-color: #5438DC;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 18px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+QPushButton#primaryButton:hover {
+    background-color: #4529CA;
+}
+
+QPushButton#primaryButton:pressed {
+    background-color: #381EB8;
+}
+
+QPushButton#secondaryButton {
+    background-color: #FFFFFF;
+    color: #1A1A1F;
+    border: 1px solid #E7E2D6;
+    border-radius: 8px;
+    padding: 8px 16px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+QPushButton#secondaryButton:hover {
+    background-color: #F5F2EA;
+}
+
+QPushButton#secondaryButton:pressed {
+    background-color: #EDE8DC;
+}
+
+/* Sliders */
+QWidget#WeightSlidersPanel {
+    background-color: #FFFFFF;
+    border: 1px solid #E7E2D6;
+    border-radius: 12px;
+}
+
+QSlider::groove:horizontal {
+    height: 6px;
+    background: #ECE7DC;
+    border-radius: 3px;
+}
+
+QSlider::sub-page:horizontal {
+    background: #5438DC;
+    border-radius: 3px;
+}
+
+QSlider::handle:horizontal {
+    background: #5438DC;
+    border: 2px solid #FFFFFF;
+    width: 16px;
+    height: 16px;
+    margin: -5px 0;
+    border-radius: 8px;
+}
+
+QSlider::handle:horizontal:hover {
+    background: #4529CA;
+}
+
+QLabel#sliderNameLabel {
+    color: #1A1A1F;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+QLabel#sliderValueLabel {
+    color: #1A1A1F;
+    font-size: 13px;
+    font-weight: 600;
+    min-width: 36px;
+}
+
+QLabel#sumLabel {
+    color: #6B6B73;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* Assignments Table */
+QTableView#assignmentsTable {
+    background-color: #FFFFFF;
+    border: 1px solid #E7E2D6;
+    border-radius: 12px;
+    gridline-color: #F5F2EA;
+    selection-background-color: #F3F0FF;
+    selection-color: #1A1A1F;
+    outline: none;
+}
+
+QHeaderView::section {
+    background-color: #FAF8F5;
+    color: #6B6B73;
+    border: none;
+    border-bottom: 1px solid #E7E2D6;
+    padding: 10px 12px;
+    font-size: 12px;
+    font-weight: 600;
+    text-align: left;
+}
+
+QTableView::item {
+    padding: 8px 12px;
+    border-bottom: 1px solid #F5F2EA;
+}
+
+/* Action Override Combobox */
+QComboBox#overrideCombo {
+    background-color: #FFFFFF;
+    color: #1A1A1F;
+    border: 1px solid #E7E2D6;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 12px;
+}
+
+QComboBox#overrideCombo:hover {
+    border-color: #5438DC;
+}
+
+QComboBox#overrideCombo::drop-down {
+    border: none;
+    width: 18px;
+}
+
+QComboBox#overrideCombo QAbstractItemView {
+    background-color: #FFFFFF;
+    color: #1A1A1F;
+    border: 1px solid #E7E2D6;
+    selection-background-color: #F3F0FF;
+    selection-color: #1A1A1F;
+}
